@@ -2,9 +2,9 @@ package main
 
 import (
 	"flag"
-	"fmt"
-	"io/ioutil"
 	"log"
+
+	"github.com/kr/pretty"
 
 	"github.com/liftM/feedme/hack/caviar"
 )
@@ -22,20 +22,36 @@ func main() {
 		panic(err)
 	}
 
-	err = session.SignIn(*user, *pass)
+	// err = session.SignIn(*user, *pass)
+	// if err != nil {
+	// 	panic(err)
+	// }
+
+	// res, err := session.GetJSON("/san-francisco")
+	// if err != nil {
+	// 	panic(err)
+	// }
+	// defer res.Body.Close()
+
+	// body, err := ioutil.ReadAll(res.Body)
+	// if err != nil {
+	// 	panic(err)
+	// }
+
+	err = session.SetLocation(caviar.Address{
+		City:          "San Francisco",
+		PostalCode:    "94110",
+		State:         "California",
+		StreetAddress: "1301 Valencia Street",
+	})
 	if err != nil {
 		panic(err)
 	}
 
-	res, err := session.Get("/san-francisco")
+	listing, err := session.Merchants()
 	if err != nil {
 		panic(err)
 	}
-	defer res.Body.Close()
 
-	body, err := ioutil.ReadAll(res.Body)
-	if err != nil {
-		panic(err)
-	}
-	fmt.Println(string(body))
+	pretty.Println(listing)
 }

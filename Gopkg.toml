@@ -9,3 +9,7 @@
 [[constraint]]
   branch = "master"
   name = "golang.org/x/net"
+
+[[constraint]]
+  name = "github.com/kr/pretty"
+  version = "0.1.0"
